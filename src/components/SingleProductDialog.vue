@@ -1,15 +1,15 @@
 <script setup>
 import { shallowRef } from 'vue'
+import { ref } from 'vue'
 import user from '@/assets/constants'
 const dialog = shallowRef(false)
-const notifications = shallowRef(false)
-const sound = shallowRef(true)
-const widgets = shallowRef(false)
 import { useCartStore } from '../store/cartStore';
 import { useShippement } from '@/composables/useShippement'
 
+// Se inicia el composable responsable del uso de la api de Envia.com
 const {getQuote} = useShippement();
 
+// Se guarda un producto en el store del carro
 const storeProduct = (product) => {
     const cartStore = useCartStore();
     cartStore.addToCart(product);
@@ -35,42 +35,43 @@ const props = defineProps({
             <v-card color="#0e0d0d" >
                 <v-toolbar color="transparent">
                     <v-btn icon="mdi-close" @click="dialog = false"></v-btn>
-
-                    <!-- <v-toolbar-title>{{ product.name }}</v-toolbar-title> -->
-
                     <v-spacer></v-spacer>
-
-
                 </v-toolbar>
 
                 <v-container class="w-60 h-100" >
-                   
                     <v-row  class="container ">
+
+                        
                         <v-col class="p-30" cols="8" style="color:black">
-                            <v-container >
-                                <v-img style="margin: 0%;" class="align-center text-white " width="100%" :src="product.imageUrl" cover
+                            <div class="img-container">
+                                <v-img  class="text-white ":src="product.imageUrl" 
                                    >
                                 </v-img>
-
-                            </v-container>
+                            </div>
                             
-
                         </v-col>
+
 
                         <v-col cols="4" style="color:black">
                             <v-container>
                                 <v-card variant="outlined" class="pa-5" style="background-color: white;">
+                                    
                                     <h1 style="font-weight: bold;" class="text-h4"> {{ product.name }}</h1>
+                                    
+                                    
+                                    <h1 v-if="!product.discount"  class="text-h5"> {{ product.price }}  {{ product.currency }}</h1>
+                                    <h1 v-else  class="text-h5"> Discount!</h1>
         
-                                    <h1  class="text-h5"> {{ product.price }}  {{ product.currency }}</h1>
-        
-                                     <p class="text-h7 mb-5"> {{ product.description !== null ? product.description : 'No hay descripción' }} </p> 
+                                     <p class="text-h7 "> {{ product.description !== null ? product.description : 'No hay descripción' }} </p> 
+
+                                     <p  style="font-size: medium; color:grey; " class="mb-5"> Disponibles: {{ product.quantity }}</p>
+
                                      <p class="text-h7 mb-5"><strong>Vendido por:</strong> {{ product.vendor !== null ? product.vendor : 'No hay descripción' }} </p> 
 
-
-                                     <p class="text-h6"> Hasta: {{ user.origin.city }} </p> 
+                                     <v-divider class="mt-5 mb-5 " :thickness="2" color="black"></v-divider>
+                                     <p class="text-h7"> Hasta: {{ user.origin.city }} </p> 
         
-                                     <p class="text-h6"> Hasta: {{ user.destination.city }} </p> 
+                                     <p class="text-h7"> Hasta: {{ user.destination.city }} </p> 
         
                                      <v-btn @click="getQuote(user)">
                                         Calcular envío
@@ -78,7 +79,7 @@ const props = defineProps({
         
                                     <br>
     
-                                    <v-divider class="mt-5 " :thickness="4" color="black"></v-divider>
+                                    <v-divider class="mt-5 " :thickness="2" color="black"></v-divider>
                                     <v-btn prepend-icon="mdi-cart-heart" class="mt-5" width="100%" color="black" @click="storeProduct(product)">
                                         agregar al carrito
                                     </v-btn>
@@ -86,7 +87,7 @@ const props = defineProps({
                                 </v-card>
 
                             </v-container>
-                            
+                           
                         </v-col>
                     </v-row>
 
@@ -97,6 +98,13 @@ const props = defineProps({
 </template>
 
 <style>
+
+.img-container {
+    padding: 0px 5rem 0px 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
 
 .descripcion {
     font-family: "Roboto", sans-serif;

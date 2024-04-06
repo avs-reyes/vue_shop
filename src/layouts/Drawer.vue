@@ -1,20 +1,12 @@
 <script setup>
-import Ecommerce from '@/components/icons/Ecommerce.vue';
 import {  useRouter } from 'vue-router'
-import { useCartStore } from '@/store/cartStore';
-import { ref, computed } from 'vue';
-
-const cartStore = useCartStore();
-const cartProducts = computed(() => cartStore.products);
-
 const router = useRouter();
-
-
 
 const redirect = (url) => {
   router.push(url)
 }
 </script>
+
 
 <template>
   <v-navigation-drawer permanent style="width: 20%;" color="#0E0D0D">
@@ -28,8 +20,8 @@ const redirect = (url) => {
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item prepend-icon="mdi-home-city" title="Prodcutos" value="home" @click="redirect('/')"></v-list-item>
-      <v-list-item prepend-icon="mdi-account" :title="`Mi carrito -  (${Object.keys(cartProducts).length})`" value="account" @click="redirect('/cart')"> </v-list-item>
+      <v-list-item prepend-icon="mdi-store" title="Productos" value="home" @click="redirect('/')"></v-list-item>
+      <v-list-item prepend-icon="mdi-cart-heart" title="Mi carrito" value="cart" @click="redirect('/cart')"> </v-list-item>
     </v-list>
   </v-navigation-drawer>
 

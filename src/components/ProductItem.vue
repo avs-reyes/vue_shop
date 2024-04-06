@@ -1,3 +1,15 @@
+<script setup>
+
+import SingleProductDialog from './SingleProductDialog.vue'
+
+const props = defineProps({
+    product: {
+        type: Object,
+        required: true
+    }
+});
+</script>
+
 <template>
     <v-card color="#0E0D0D" style="align-items: center;">
         <v-img class="align-end text-white" height="200" :src="product.imageUrl" cover >
@@ -12,6 +24,7 @@
             <div>{{ product.description !== null ? product.description : 'No hay descripción' }}</div>
 
         </v-card-text>
+        <!-- Se manda a llamar a un Dialog de Vuetify para ver la vista detallada del producto -->
         <SingleProductDialog :product="product">
             <v-btn prepend-icon="mdi-eye-check-outline" color="white" style="background-color: #0E0D0D;">ver producto</v-btn>
         </SingleProductDialog>
@@ -19,14 +32,3 @@
 
 </template>
 
-<script setup>
-import { ref, defineProps } from 'vue';
-import SingleProductDialog from './SingleProductDialog.vue'
-
-const props = defineProps({
-    product: {
-        type: Object,
-        required: true
-    }
-});
-</script>
