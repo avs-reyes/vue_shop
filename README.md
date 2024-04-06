@@ -16,7 +16,7 @@ npm run dev
 npm run build
 ```
 
-### Keys for enviroment variables: 
+### .env requiered: 
 ```sh
 VITE_BASE_URL=
 VITE_ENVIA_URL=
